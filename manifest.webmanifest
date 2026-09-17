@@ -1,0 +1,16 @@
+{
+  "name": "Pink Wave 2026 — Be Breast Aware",
+  "short_name": "Pink Wave",
+  "description": "SGPGI Breast Health Program. Myth or Fact, Spot the Sign, and the 7-step breast self-examination — in Hindi and English.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fff6fb",
+  "theme_color": "#e91e8c",
+  "lang": "en",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}
