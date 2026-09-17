@@ -167,6 +167,22 @@ label{display:block;font-size:12.5px;font-weight:800;color:var(--muted);margin-b
   background:#fff;border:1px solid var(--line);cursor:pointer;width:100%;font:inherit;text-align:left}
 .docbar b{font-size:13.5px;color:var(--pinkd)}
 
+/* ---------- SGPGI mark + student artwork ---------- */
+.brand .mark{width:30px;height:29px;display:block;border-radius:6px}
+.hero .herologo{width:66px;height:64px;display:block;margin:0 0 12px;
+  background:#fff;border-radius:50%;padding:4px;box-shadow:0 4px 14px rgba(90,0,50,.28)}
+.arthead{font-size:15px;color:var(--pinkd);margin:22px 0 2px;letter-spacing:.2px}
+.artrail{display:flex;gap:12px;overflow-x:auto;padding:10px 2px 6px;margin:0 -16px;
+  padding-left:16px;padding-right:16px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.artrail::-webkit-scrollbar{display:none}
+.artcard{flex:0 0 172px;scroll-snap-align:start;background:#fff;border-radius:16px;
+  border:1px solid var(--line);padding:9px;box-shadow:0 5px 16px rgba(200,40,120,.09)}
+.artcard img{width:100%;aspect-ratio:1;object-fit:contain;border-radius:11px;display:block;
+  background:#fff7fb}
+.artcard span{display:block;font-size:12px;font-weight:700;color:var(--pinkd);
+  line-height:1.4;margin-top:8px}
+.artcredit{font-size:11px;color:var(--muted);text-align:center;margin-top:4px}
+
 /* ---------- interaction layer ---------- */
 .btn,.ans button,.grow,.docbar,.pat,.vid,.row{position:relative;overflow:hidden;
   transition:transform .13s ease, box-shadow .13s ease}
@@ -211,7 +227,8 @@ label{display:block;font-size:12.5px;font-weight:800;color:var(--muted);margin-b
   <div class="bar">
     <button class="iconbtn" id="backBtn" hidden>‹</button>
     <div class="brand" id="home">
-      <svg viewBox="0 0 24 24"><path d="M12 22c-1.6-3.2-3.4-5.6-5-8.2C5.3 11 5 8.6 6.5 7 8 5.4 10.3 6 12 8.2 13.7 6 16 5.4 17.5 7 19 8.6 18.7 11 17 13.8c-1.6 2.6-3.4 5-5 8.2Z" fill="#e91e8c"/></svg>
+      <img src="img/logo.png" srcset="img/logo.png 1x, img/logo@2x.png 2x"
+           alt="SGPGI Breast Health Program" class="mark">
       <span>PINK WAVE 2026</span>
     </div>
     <div class="sp"></div>
@@ -228,6 +245,8 @@ label{display:block;font-size:12.5px;font-weight:800;color:var(--muted);margin-b
         <path d="M0,60 C80,10 140,110 220,60 C300,10 350,90 400,55 L400,120 L0,120 Z" fill="#fff"/>
         <path d="M0,80 C90,40 150,120 230,80 C310,40 360,100 400,75 L400,120 L0,120 Z" fill="#fff" opacity=".45"/>
       </svg>
+      <img src="img/logo.png" srcset="img/logo.png 1x, img/logo@2x.png 2x"
+           alt="SGPGI Breast Health Program" class="herologo">
       <div class="kick">#JOINTHEWAVE</div>
       <h1 data-t="tagline"></h1>
       <p data-t="introLead"></p>
@@ -239,6 +258,11 @@ label{display:block;font-size:12.5px;font-weight:800;color:var(--muted);margin-b
       <div class="grow"><span class="n">3</span><span><b data-t="m3Title"></b><span data-t="m3Sub"></span></span></div>
     </div>
     <button class="btn mt" id="goStart" data-t="start"></button>
+
+    <h3 class="arthead mt" data-t="artTitle"></h3>
+    <div class="artrail" id="artRail"></div>
+    <div class="artcredit" id="artCredit"></div>
+
     <div class="disc" data-t="disclaimer"></div>
   </section>
 
@@ -390,8 +414,8 @@ label{display:block;font-size:12.5px;font-weight:800;color:var(--muted);margin-b
 -->
 <!-- Bump ?v= on both lines whenever you edit these files, and bump the cache
      name in sw.js too. Otherwise phones keep serving the old copy. -->
-<script src="content.js?v=5"></script>
-<script src="app.js?v=5"></script>
+<script src="content.js?v=7"></script>
+<script src="app.js?v=7"></script>
 <script>
   if ("serviceWorker" in navigator) {
     addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(()=>{}));

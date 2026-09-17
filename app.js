@@ -106,7 +106,7 @@ function setLang(l) {
   $("#signPrompt").textContent = T("tapPrompt");
   $("#bRole").innerHTML = C.roles.map(r => `<option value="${r.v}">${r.t[l]}</option>`).join("");
   renderQ(); renderSign(); renderStep(); renderPatterns();
-  renderEvent(); renderVideos(); renderResult();
+  renderEvent(); renderVideos(); renderArt(); renderResult();
 }
 
 /* --------------------------------------------------------------- nav ----- */
@@ -135,6 +135,17 @@ function openVideo(id) {
 }
 const vidRow = v => `<button class="vid" data-v="${v.id}">
   <img src="${thumb(v.id)}" alt="" loading="lazy"><b>${v.t[lang]}</b></button>`;
+
+function renderArt() {
+  $("#artRail").innerHTML = C.artwork.map(a =>
+    `<div class="artcard">
+       <picture><source srcset="img/${a.img}.webp" type="image/webp">
+       <img src="img/${a.img}.jpg" alt="${a.t[lang]}" loading="lazy"></picture>
+       <span>${a.t[lang]}</span>
+     </div>`).join("");
+  $("#artCredit").textContent = C.artCredit[lang];
+  document.querySelector(".arthead").textContent = C.artTitle[lang];
+}
 
 function renderVideos() {
   $("#vidSeries").innerHTML  = C.videoSeries.map(vidRow).join("");

@@ -388,6 +388,22 @@ C.cert = {
             hi:"स्तन कैंसर मुक्त कल के लिए — साथ मिलकर"}
 };
 
+/* Student awareness artwork from sgpgibreasthealth.org.in — the slogans are
+   the students' own, transcribed from the images. */
+C.artwork = [
+ {img:"art1", t:{en:"Hope, awareness and beauty",
+                 hi:"आशा, जागरूकता और सुंदरता"}},
+ {img:"art2", t:{en:"Touch, check, live — be breast aware",
+                 hi:"छुइए, जाँचिए, जिएँ — स्तन जागरूक बनिए"}},
+ {img:"art3", t:{en:"Check, care, conquer",
+                 hi:"जाँचिए, ध्यान दीजिए, जीतिए"}},
+ {img:"art4", t:{en:"Hug yourself with care — check for breast cancer",
+                 hi:"ख़ुद को प्यार से गले लगाइए — स्तन कैंसर की जाँच कीजिए"}}
+];
+C.artCredit = {en:"Awareness artwork by students · Sanjivini Sharma",
+               hi:"छात्रों द्वारा जागरूकता कलाकृति · संजीविनी शर्मा"};
+C.artTitle  = {en:"In their own words", hi:"उनके अपने शब्दों में"};
+
 C.mapUrl = "https://maps.app.goo.gl/RXDnKuQUuPk2BGFp6";
 C.mapCta = {en:"Open in Maps", hi:"मैप में खोलें"};
 
