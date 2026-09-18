@@ -473,120 +473,56 @@ function sp(g, text, cx, y, gap) {
   chars.forEach(c => { g.fillText(c, x + g.measureText(c).width / 2, y); x += g.measureText(c).width + gap; });
 }
 
-function drawCert(name) {
-  const cv = $("#pcanvas"), g = cv.getContext("2d"), W = cv.width, H = cv.height, cx = W / 2;
-  const L = k => C.cert[k][lang];
-
-  /* ---- background: poster gradient ---- */
-  const bg = g.createLinearGradient(0, 0, W * .3, H);
-  bg.addColorStop(0, "#ffc0e0"); bg.addColorStop(.28, "#f5479f");
-  bg.addColorStop(.7, "#d5147e"); bg.addColorStop(1, "#7a0846");
-  g.fillStyle = bg; g.fillRect(0, 0, W, H);
-
-  /* ---- flowing ribbon waves ---- */
-  const wave = (y, amp, alpha, thick) => {
-    g.globalAlpha = alpha; g.fillStyle = "#fff";
-    g.beginPath(); g.moveTo(-40, y);
-    g.bezierCurveTo(W * .25, y - amp, W * .55, y + amp, W + 40, y - amp * .5);
-    g.lineTo(W + 40, y - amp * .5 + thick);
-    g.bezierCurveTo(W * .55, y + amp + thick, W * .25, y - amp + thick, -40, y + thick);
-    g.closePath(); g.fill(); g.globalAlpha = 1;
-  };
-  wave(190, 120, .16, 70); wave(250, 90, .10, 46);
-  wave(1120, 110, .14, 64); wave(1215, 80, .09, 40);
-
-  /* ---- drifting petals ---- */
-  g.fillStyle = "#fff";
-  for (let i = 0; i < 26; i++) {
-    const x = Math.random() * W, y = Math.random() * H,
-          s = 7 + Math.random() * 15, a = Math.random() * Math.PI;
-    g.save(); g.translate(x, y); g.rotate(a); g.globalAlpha = .10 + Math.random() * .20;
-    g.beginPath(); g.ellipse(0, 0, s, s * .5, 0, 0, 7); g.fill(); g.restore();
-  }
-  g.globalAlpha = 1;
-
-  /* ---- header ---- */
-  g.textAlign = "center"; g.textBaseline = "alphabetic";
-  g.fillStyle = "rgba(255,255,255,.9)"; g.font = "700 23px system-ui, sans-serif";
-  sp(g, L("eyebrow"), cx, 92, 2.4);
-
-  g.fillStyle = "#fff"; g.font = "900 92px system-ui, sans-serif";
-  g.fillText("PINK WAVE 2026", cx, 186);
-  g.fillStyle = "rgba(255,255,255,.92)"; g.font = "800 26px system-ui, sans-serif";
-  sp(g, "#JOINTHEWAVE", cx, 228, 5);
-
-  /* ---- white card ---- */
-  const CX = 84, CY = 286, CW = W - 168, CH = 800;
-  g.save(); g.shadowColor = "rgba(70,0,40,.35)"; g.shadowBlur = 44; g.shadowOffsetY = 14;
-  g.fillStyle = "#fffafc"; rr(g, CX, CY, CW, CH, 34); g.fill(); g.restore();
-  g.strokeStyle = "#f7c9e2"; g.lineWidth = 3; rr(g, CX + 14, CY + 14, CW - 28, CH - 28, 24); g.stroke();
-
-  /* ribbon emblem at the top of the card */
-  g.save(); g.translate(cx, CY + 74); g.scale(.92, .92);
-  g.strokeStyle = "#e91e8c"; g.lineWidth = 13; g.lineCap = "round"; g.lineJoin = "round";
-  g.beginPath();
-  g.moveTo(-24, 56); g.lineTo(6, -6);
-  g.bezierCurveTo(-30, -34, -30, -76, 2, -84);
-  g.bezierCurveTo(34, -76, 34, -34, -2, -6);
-  g.lineTo(28, 56);
-  g.stroke(); g.restore();
-
-  g.fillStyle = "#b3126b"; g.font = "800 25px system-ui, sans-serif";
-  sp(g, L("label"), cx, CY + 176, 3);
-  g.strokeStyle = "#f2b9d8"; g.lineWidth = 2;
-  g.beginPath(); g.moveTo(cx - 150, CY + 200); g.lineTo(cx + 150, CY + 200); g.stroke();
-
-  g.fillStyle = "#7c6c76"; g.font = "400 30px system-ui, sans-serif";
-  g.fillText(L("certify"), cx, CY + 252);
-
-  /* name */
-  const nm = (name || (lang === "hi" ? "एक जागरूक मित्र" : "A Breast-Aware Friend")).slice(0, 24);
-  g.fillStyle = "#2a1b25";
-  let fs = 74; g.font = `900 ${fs}px system-ui, sans-serif`;
-  while (g.measureText(nm).width > CW - 140 && fs > 38) { fs -= 3; g.font = `900 ${fs}px system-ui, sans-serif`; }
-  g.fillText(nm, cx, CY + 330);
-  g.strokeStyle = "#e91e8c"; g.lineWidth = 4;
-  g.beginPath(); g.moveTo(cx - 110, CY + 352); g.lineTo(cx + 110, CY + 352); g.stroke();
-
-  g.fillStyle = "#5d4c56"; g.font = "400 29px system-ui, sans-serif";
-  g.fillText(L("did"), cx, CY + 404);
-
-  /* score pill */
-  const pw = 250, ph = 70, px = cx - pw / 2, py = CY + 432;
-  const pg = g.createLinearGradient(px, py, px + pw, py + ph);
-  pg.addColorStop(0, "#f5479f"); pg.addColorStop(1, "#b3126b");
-  g.fillStyle = pg; rr(g, px, py, pw, ph, 35); g.fill();
-  g.fillStyle = "rgba(255,255,255,.85)"; g.font = "800 19px system-ui, sans-serif";
-  sp(g, L("score"), cx, py + 27, 2.6);
-  g.fillStyle = "#fff"; g.font = "900 34px system-ui, sans-serif";
-  g.fillText(`${total()} / ${MAX}`, cx, py + 58);
-
-  /* pledge */
-  g.fillStyle = "#5d4c56"; g.font = "400 28px system-ui, sans-serif";
-  g.fillText(L("took"), cx, CY + 556);
-  g.font = "700 29px system-ui, sans-serif";
-  C.pledgeLines[lang].forEach((l, i) => {
-    const y = CY + 604 + i * 50;
-    g.fillStyle = "#e91e8c"; g.beginPath(); g.arc(cx - 252, y - 9, 6.5, 0, 7); g.fill();
-    g.fillStyle = "#2a1b25"; g.textAlign = "left"; g.fillText(l, cx - 234, y); g.textAlign = "center";
+let certBg = null;
+function loadCertBg() {
+  if (certBg) return Promise.resolve(certBg);
+  return new Promise((res, rej) => {
+    const im = new Image();
+    im.onload  = () => { certBg = im; res(im); };
+    im.onerror = rej;
+    im.src = (document.createElement("canvas").toDataURL("image/webp").indexOf("webp") > -1)
+             ? "img/cert.webp" : "img/cert.jpg";
   });
+}
 
-  /* script accent, separated by a hairline */
-  g.strokeStyle = "#f2b9d8"; g.lineWidth = 2;
-  g.beginPath(); g.moveTo(cx - 120, CY + 728); g.lineTo(cx + 120, CY + 728); g.stroke();
-  g.fillStyle = "#b3126b";
-  /* Georgia has no Devanagari — italic serif only for Latin */
-  g.font = lang === "hi" ? "800 36px system-ui, sans-serif"
-                         : "italic 700 38px Georgia, 'Times New Roman', serif";
-  g.fillText(L("script"), cx, CY + 776);
+async function drawCert(name) {
+  const cv = $("#pcanvas"), g = cv.getContext("2d");
+  let bg;
+  try { bg = await loadCertBg(); }
+  catch (e) { return; }                 /* no background → don't draw a broken card */
 
-  /* ---- footer ---- */
-  g.fillStyle = "#fff"; g.font = "700 27px system-ui, sans-serif";
-  g.fillText(L("where"), cx, 1174);
-  g.fillStyle = "rgba(255,255,255,.88)"; g.font = "800 20px system-ui, sans-serif";
-  sp(g, L("motto"), cx, 1222, 2.2);
-  g.fillStyle = "rgba(255,255,255,.62)"; g.font = "500 19px system-ui, sans-serif";
-  g.fillText("Made by drmithleshw using Claude AI  ·  © drmithleshw", cx, 1290);
+  cv.width  = bg.naturalWidth;          /* 1600 x 1131, the official artwork */
+  cv.height = bg.naturalHeight;
+  const W = cv.width, H = cv.height;
+  g.drawImage(bg, 0, 0, W, H);
+
+  /* The design leaves a gap between "Certificate of Participation" and
+     "In Recognition of..." — that is where the participant's name belongs. */
+  const cx = W * 0.514, base = H * 0.472;
+
+  const nm = (name || (lang === "hi" ? "एक जागरूक मित्र" : "A Breast-Aware Friend")).trim().slice(0, 30);
+  g.textAlign = "center";
+  g.fillStyle = "#1f2a51";                       /* the navy used by the body text */
+  const serif = lang === "hi" ? "700" : "italic 700";
+  const face  = lang === "hi" ? "system-ui, sans-serif" : "Georgia, 'Times New Roman', serif";
+
+  let fs = Math.round(H * 0.072);
+  g.font = `${serif} ${fs}px ${face}`;
+  while (g.measureText(nm).width > W * 0.52 && fs > 22) {
+    fs -= 2; g.font = `${serif} ${fs}px ${face}`;
+  }
+  g.save();
+  g.shadowColor = "rgba(255,255,255,.85)"; g.shadowBlur = 12;
+  g.fillText(nm, cx, base);
+  g.restore();
+
+  /* score, small and deferential to the original layout */
+  g.font = `600 ${Math.round(H * 0.026)}px system-ui, sans-serif`;
+  g.fillStyle = "rgba(31,42,81,.78)";
+  g.fillText(
+    lang === "hi" ? `जागरूकता स्कोर ${total()} / ${MAX}` : `Awareness score ${total()} / ${MAX}`,
+    cx, base + H * 0.045
+  );
 
   $("#pdl").href = cv.toDataURL("image/png");
   $("#pout").hidden = false;
@@ -683,7 +619,7 @@ $("#snext").onclick = nextSign;
 $("#techDone").onclick = () => { go("result"); renderResult(true); track("complete", {score: total(), max: MAX}); };
 $("#toPledge").onclick = () => go("pledge");
 $("#again").onclick = () => { startMyths(); };
-$("#pmake").onclick = () => { drawCert($("#pname").value.trim()); track("pledge", {name: $("#pname").value.trim()}); };
+$("#pmake").onclick = async () => { await drawCert($("#pname").value.trim()); track("pledge", {name: $("#pname").value.trim()}); };
 $("#pshare").onclick = shareCert;
 $("#toBroch").onclick = () => go("broch");
 $("#toEvent").onclick = () => go("event");

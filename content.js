@@ -412,8 +412,8 @@ C.artwork = [
  {img:"art4", t:{en:"Hug yourself with care — check for breast cancer",
                  hi:"ख़ुद को प्यार से गले लगाइए — स्तन कैंसर की जाँच कीजिए"}}
 ];
-C.artCredit = {en:"Awareness artwork by students · Sanjivini Sharma",
-               hi:"छात्रों द्वारा जागरूकता कलाकृति · संजीविनी शर्मा"};
+C.artCredit = {en:"Awareness artwork by students, SGPGI Breast Health Program",
+               hi:"छात्रों द्वारा जागरूकता कलाकृति · एसजीपीजीआई ब्रेस्ट हेल्थ प्रोग्राम"};
 C.artTitle  = {en:"In their own words", hi:"उनके अपने शब्दों में"};
 
 C.mapUrl = "https://maps.app.goo.gl/RXDnKuQUuPk2BGFp6";
