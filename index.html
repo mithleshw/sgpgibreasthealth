@@ -183,6 +183,23 @@ label{display:block;font-size:12.5px;font-weight:800;color:var(--muted);margin-b
   line-height:1.4;margin-top:8px}
 .artcredit{font-size:11px;color:var(--muted);text-align:center;margin-top:4px}
 
+/* ---------- awareness pledge checkbox ---------- */
+.pledgebox{display:flex;gap:12px;align-items:flex-start;cursor:pointer;margin:14px 0 2px;
+  padding:13px 14px;border-radius:14px;border:2px solid var(--line);background:#fffafd;
+  transition:border-color .18s, background .18s}
+.pledgebox input{position:absolute;opacity:0;width:0;height:0;margin:0}
+.pledgebox .tick{flex:0 0 24px;height:24px;border-radius:7px;border:2.5px solid var(--pink);
+  background:#fff;position:relative;transition:background .18s, transform .12s}
+.pledgebox .tick::after{content:"";position:absolute;left:7px;top:2.5px;width:6px;height:12px;
+  border:solid #fff;border-width:0 3px 3px 0;transform:rotate(45deg) scale(0);
+  transition:transform .18s cubic-bezier(.2,1.6,.5,1)}
+.pledgebox input:checked ~ .tick{background:var(--pink)}
+.pledgebox input:checked ~ .tick::after{transform:rotate(45deg) scale(1)}
+.pledgebox input:focus-visible ~ .tick{box-shadow:0 0 0 4px rgba(233,30,140,.22)}
+.pledgebox:has(input:checked){border-color:var(--pink);background:#fff2f8}
+.pledgebox .ptxt{font-size:13.5px;font-weight:700;line-height:1.5;color:var(--ink)}
+.pthanks{font-size:12.5px;font-weight:700;color:var(--ok);margin:7px 2px 0;animation:in .25s ease}
+
 /* ---------- source attribution (every screen) ---------- */
 .srcbox{display:flex;gap:11px;align-items:flex-start;margin-top:14px;padding:12px 13px;
   border-radius:14px;background:rgba(255,255,255,.72);border:1px solid var(--line);
@@ -386,6 +403,14 @@ label{display:block;font-size:12.5px;font-weight:800;color:var(--muted);margin-b
       <label data-t="fldName"></label><input type="text" id="bName" maxlength="40">
       <label data-t="fldCity"></label><input type="text" id="bCity" maxlength="40">
       <label data-t="fldRole"></label><select id="bRole"></select>
+
+      <label class="pledgebox" for="bPledge">
+        <input type="checkbox" id="bPledge">
+        <span class="tick" aria-hidden="true"></span>
+        <span class="ptxt" data-t="pledgeCheck"></span>
+      </label>
+      <div class="pthanks" id="bThanks" hidden data-t="pledgeThanks"></div>
+
       <button class="btn mt8" id="bEnBtn" data-t="getPdfEn"></button>
       <button class="btn ghost sm mt8" id="bHiBtn" data-t="getPdfHi"></button>
     </div>
@@ -423,8 +448,8 @@ label{display:block;font-size:12.5px;font-weight:800;color:var(--muted);margin-b
 -->
 <!-- Bump ?v= on both lines whenever you edit these files, and bump the cache
      name in sw.js too. Otherwise phones keep serving the old copy. -->
-<script src="content.js?v=11"></script>
-<script src="app.js?v=11"></script>
+<script src="content.js?v=12"></script>
+<script src="app.js?v=12"></script>
 <script>
   if ("serviceWorker" in navigator) {
     addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(()=>{}));

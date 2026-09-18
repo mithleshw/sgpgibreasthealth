@@ -110,7 +110,8 @@ function track(event, data = {}) {
       myth_score: mythScore, sign_score: signScore, steps_done: stepsDone
     });
   if (event === "brochure_download")
-    return post("brochure_downloads", {session_id:sessionId, name, city, role, language_downloaded});
+    return post("brochure_downloads", {session_id:sessionId, name, city, role,
+                                       language_downloaded, pledged: rest.pledged});
   if (event === "game_over")
     return post("game_scores", {session_id:sessionId, lang, game:"ribbon",
                                 score:rest.score, best_combo:rest.best_combo, duration_s:rest.duration_s});
@@ -563,7 +564,10 @@ function getBrochure(which) {
     alert(lang === "hi" ? "कृपया नाम और शहर भरें।" : "Please fill in your name and city.");
     return;
   }
-  track("brochure_download", {name, city, role, language_downloaded: which});
+  /* The pledge is deliberately optional — the brochure is a health resource and
+     should never be held hostage. Recording false is as useful as recording true. */
+  const pledged = $("#bPledge").checked;
+  track("brochure_download", {name, city, role, language_downloaded: which, pledged});
   const a = document.createElement("a");
   a.href = which === "hi" ? "brochure_hin.pdf" : "brochure_eng.pdf";
   a.download = which === "hi" ? "SGPGI-स्तन-स्वास्थ्य-पुस्तिका.pdf" : "SGPGI-Breast-Health-Guide.pdf";
@@ -634,6 +638,14 @@ $("#pshare").onclick = shareCert;
 $("#toBroch").onclick = () => go("broch");
 $("#toEvent").onclick = () => go("event");
 $("#toVideos").onclick = () => go("videos");
+$("#bPledge").onchange = (e) => {
+  $("#bThanks").hidden = !e.target.checked;
+  if (e.target.checked) {
+    buzz(OK_BUZZ);
+    const r = $("#bPledge").closest(".pledgebox").getBoundingClientRect();
+    burst(14, r.left + 30, r.top + r.height / 2);
+  }
+};
 $("#bEnBtn").onclick = () => getBrochure("en");
 $("#bHiBtn").onclick = () => getBrochure("hi");
 $("#inviteBtn").onclick = () => waShare(

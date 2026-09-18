@@ -89,6 +89,10 @@ C.ui = {
   fldRole:      {en:"I am a",                   hi:"मैं हूँ"},
   getPdfEn:     {en:"Download (English)",       hi:"डाउनलोड करें (अंग्रेज़ी)"},
   getPdfHi:     {en:"Download (Hindi)",         hi:"डाउनलोड करें (हिंदी)"},
+  pledgeCheck:  {en:"I pledge to spread awareness about breast cancer",
+                 hi:"मैं स्तन कैंसर के बारे में जागरूकता फैलाने की प्रतिज्ञा लेती/लेता हूँ"},
+  pledgeThanks: {en:"Thank you — that is how this actually spreads.",
+                 hi:"धन्यवाद — जागरूकता इसी तरह फैलती है।"},
 
   seeDoctor:    {en:"Talk to a doctor",         hi:"डॉक्टर से मिलिए"},
   eventTitle:   {en:"Pink Wave 2026 Walkathon", hi:"पिंक वेव 2026 वॉकाथॉन"},
