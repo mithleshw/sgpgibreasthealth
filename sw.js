@@ -1,9 +1,9 @@
 /* Pink Wave 2026 — offline service worker
    Bump CACHE whenever you change any file, otherwise phones keep the old copy. */
-const CACHE = "pinkwave-v7";
+const CACHE = "pinkwave-v9";
 
 const ASSETS = [
-  "./", "./index.html", "./content.js?v=7", "./app.js?v=7",
+  "./", "./index.html", "./content.js?v=9", "./app.js?v=9",
   "./manifest.webmanifest", "./icon-192.png", "./icon-512.png",
   "./img/step1.webp","./img/step2.webp","./img/step3.webp","./img/step4.webp",
   "./img/step5.webp","./img/step6.webp","./img/pads.webp","./img/overlap.webp",
@@ -50,6 +50,11 @@ self.addEventListener("fetch", e => {
         caches.open(CACHE).then(c => c.put(req, copy));
       }
       return res;
-    }).catch(() => caches.match("./index.html")))
+    }).catch(() => {
+      /* Only fall back to the app shell for PAGE loads. Returning index.html
+         for a failed image or PDF request would hand HTML to an <img> tag. */
+      if (req.mode === "navigate") return caches.match("./index.html");
+      return Response.error();
+    }))
   );
 });

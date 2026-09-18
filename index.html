@@ -183,6 +183,15 @@ label{display:block;font-size:12.5px;font-weight:800;color:var(--muted);margin-b
   line-height:1.4;margin-top:8px}
 .artcredit{font-size:11px;color:var(--muted);text-align:center;margin-top:4px}
 
+/* ---------- source attribution (every screen) ---------- */
+.srcbox{display:flex;gap:11px;align-items:flex-start;margin-top:14px;padding:12px 13px;
+  border-radius:14px;background:rgba(255,255,255,.72);border:1px solid var(--line);
+  font-size:11.5px;line-height:1.6;color:var(--muted)}
+.srcbox img{width:34px;height:33px;flex:0 0 34px;border-radius:7px}
+.srcbox a{color:var(--pinkd);text-decoration:none}
+.srcbox b{color:var(--pinkd)}
+.srclink{display:block;margin-top:5px;font-weight:800;color:var(--pink)}
+
 /* ---------- interaction layer ---------- */
 .btn,.ans button,.grow,.docbar,.pat,.vid,.row{position:relative;overflow:hidden;
   transition:transform .13s ease, box-shadow .13s ease}
@@ -414,8 +423,8 @@ label{display:block;font-size:12.5px;font-weight:800;color:var(--muted);margin-b
 -->
 <!-- Bump ?v= on both lines whenever you edit these files, and bump the cache
      name in sw.js too. Otherwise phones keep serving the old copy. -->
-<script src="content.js?v=7"></script>
-<script src="app.js?v=7"></script>
+<script src="content.js?v=9"></script>
+<script src="app.js?v=9"></script>
 <script>
   if ("serviceWorker" in navigator) {
     addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(()=>{}));

@@ -98,8 +98,20 @@ C.ui = {
   disclaimer:   {en:"For awareness and education only. This is not a diagnosis and does not replace examination by a doctor. If you notice any change in your breast, see a doctor — do not wait.",
                  hi:"यह केवल जागरूकता एवं शिक्षा के लिए है। यह निदान नहीं है और डॉक्टर की जाँच का विकल्प नहीं है। स्तन में कोई भी बदलाव दिखे तो डॉक्टर को दिखाइए — प्रतीक्षा न करें।"},
   credit:       {en:"Made by drmithleshw using Claude AI",
-                 hi:"drmithleshw द्वारा Claude AI से निर्मित"}
+                 hi:"drmithleshw द्वारा Claude AI से निर्मित"},
+
+  /* Source attribution — shown on EVERY screen, under the disclaimer. */
+  sourceLead:   {en:"All medical content on this page is from the",
+                 hi:"इस पृष्ठ की सारी चिकित्सकीय सामग्री का स्रोत है —"},
+  sourceName:   {en:"SGPGI Breast Health Program",
+                 hi:"एसजीपीजीआई ब्रेस्ट हेल्थ प्रोग्राम"},
+  sourceTail:   {en:"— its printed guide “Your Guide to Early Detection of Breast Cancer” and its Myths & Facts pages.",
+                 hi:"— इसकी मुद्रित पुस्तिका “स्तन कैंसर की प्रारम्भिक जाँच” तथा इसके मिथक एवं तथ्य पृष्ठ।"},
+  sourceVisit:  {en:"Visit sgpgibreasthealth.org.in",
+                 hi:"sgpgibreasthealth.org.in देखिए"}
 };
+
+C.sourceUrl = "https://www.sgpgibreasthealth.org.in/";
 
 /* ------------------------------------------------------------- MYTHS ----
    Source: sgpgibreasthealth.org.in → Myths & Facts ("What Science Says").

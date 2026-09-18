@@ -7,7 +7,10 @@
 /* ---- EDIT BEFORE DEPLOY ------------------------------------------------ */
 const SITE_URL     = "https://mithleshw.github.io/sgpgibreasthealth/";
 const REGISTER_URL = "https://forms.gle/REPLACE_ME";   /* ← your registration form */
-const ANALYTICS    = "";     /* Supabase endpoint; empty = collect nothing at all */
+/* Supabase collector. Country is resolved server-side from the request and the
+   IP is discarded; nothing identifiable is sent from here. Set to "" to switch
+   off all collection instantly. */
+const ANALYTICS    = "https://sbhiuachwiuipgsybcqa.supabase.co/functions/v1/collect";
 /* ----------------------------------------------------------------------- */
 
 const $  = s => document.querySelector(s);
@@ -74,17 +77,48 @@ document.addEventListener("pointerdown", e => {
 });
 
 /* ------------------------------------------------------------ analytics -- */
-function track(event, data = {}) {
-  if (!ANALYTICS) return;                       /* nothing configured → no-op */
-  const body = JSON.stringify({
-    session_id: sessionId, ts: new Date().toISOString(),
-    lang, event, ...data
-  });
+let firstBeacon = !localStorage.getItem("pw_seen");   /* geo lookup once per visitor */
+const SRC = new URLSearchParams(location.search).get("src")
+         || (document.referrer.includes("whatsapp") ? "wa" : "direct");
+const DEVICE = /android/i.test(navigator.userAgent) ? "android"
+             : /iphone|ipad/i.test(navigator.userAgent) ? "ios" : "other";
+
+function post(table, row, first = false) {
+  if (!ANALYTICS) return;                       /* switch off by blanking the URL */
+  const body = JSON.stringify({ table, row, first });
+  /* text/plain keeps this a CORS "simple request": no preflight, and no
+     credentials — so the collector can stay on a wildcard origin. Sending
+     application/json here triggers a preflight that sendBeacon fails. */
+  const TYPE = "text/plain;charset=UTF-8";
   try {
-    navigator.sendBeacon
-      ? navigator.sendBeacon(ANALYTICS, new Blob([body], {type:"application/json"}))
-      : fetch(ANALYTICS, {method:"POST", body, headers:{"Content-Type":"application/json"}, keepalive:true});
+    if (navigator.sendBeacon && navigator.sendBeacon(ANALYTICS, new Blob([body], {type:TYPE}))) return;
+    fetch(ANALYTICS, {
+      method: "POST", body, headers: {"Content-Type": TYPE},
+      mode: "cors", credentials: "omit", keepalive: true
+    }).catch(() => {});
   } catch (e) { /* analytics must never break the app */ }
+}
+
+function track(event, data = {}) {
+  const { name, city, role, language_downloaded, ...rest } = data;
+
+  /* the two tables that hold something a person typed themselves */
+  if (event === "pledge")
+    return post("pledges", {session_id:sessionId, lang, name, score: rest.score ?? total()});
+  if (event === "brochure_download")
+    return post("brochure_downloads", {session_id:sessionId, name, city, role, language_downloaded});
+  if (event === "game_over")
+    return post("game_scores", {session_id:sessionId, lang, game:"ribbon",
+                                score:rest.score, best_combo:rest.best_combo, duration_s:rest.duration_s});
+
+  post("events", {
+    session_id: sessionId, lang, source: SRC, device: DEVICE,
+    event, module: rest.module, item_id: rest.item_id,
+    correct: rest.correct, ms: rest.ms, score: rest.score,
+    meta: rest.meta
+  }, firstBeacon);
+
+  if (firstBeacon) { firstBeacon = false; localStorage.setItem("pw_seen", "1"); }
 }
 
 /* ------------------------------------------------------------ language --- */
@@ -105,6 +139,7 @@ function setLang(l) {
   $("#patEnd").textContent = C.procedureEnd[l];
   $("#signPrompt").textContent = T("tapPrompt");
   $("#bRole").innerHTML = C.roles.map(r => `<option value="${r.v}">${r.t[l]}</option>`).join("");
+  renderSource();
   renderQ(); renderSign(); renderStep(); renderPatterns();
   renderEvent(); renderVideos(); renderArt(); renderResult();
 }
@@ -135,6 +170,28 @@ function openVideo(id) {
 }
 const vidRow = v => `<button class="vid" data-v="${v.id}">
   <img src="${thumb(v.id)}" alt="" loading="lazy"><b>${v.t[lang]}</b></button>`;
+
+/* Source credit block, appended under the disclaimer on every screen. */
+function renderSource() {
+  const html =
+    `<div class="srcbox">
+       <img src="img/logo.png" srcset="img/logo.png 1x, img/logo@2x.png 2x" alt="">
+       <div>${T("sourceLead")}
+         <a href="${C.sourceUrl}" target="_blank" rel="noopener"><b>${T("sourceName")}</b></a>
+         ${T("sourceTail")}
+         <a class="srclink" href="${C.sourceUrl}" target="_blank" rel="noopener">${T("sourceVisit")} ↗</a>
+       </div>
+     </div>`;
+  $$(".screen").forEach(s => {
+    let box = s.querySelector(".srcbox");
+    if (box) box.outerHTML = html;
+    else {
+      const d = s.querySelector(".disc");
+      if (d) d.insertAdjacentHTML("afterend", html);
+      else s.insertAdjacentHTML("beforeend", html);
+    }
+  });
+}
 
 function renderArt() {
   $("#artRail").innerHTML = C.artwork.map(a =>
