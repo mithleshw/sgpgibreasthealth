@@ -104,7 +104,11 @@ function track(event, data = {}) {
 
   /* the two tables that hold something a person typed themselves */
   if (event === "pledge")
-    return post("pledges", {session_id:sessionId, lang, name, score: rest.score ?? total()});
+    return post("pledges", {
+      session_id: sessionId, lang, name,
+      score: rest.score ?? total(), max_score: MAX,
+      myth_score: mythScore, sign_score: signScore, steps_done: stepsDone
+    });
   if (event === "brochure_download")
     return post("brochure_downloads", {session_id:sessionId, name, city, role, language_downloaded});
   if (event === "game_over")
@@ -476,12 +480,18 @@ function sp(g, text, cx, y, gap) {
 let certBg = null;
 function loadCertBg() {
   if (certBg) return Promise.resolve(certBg);
+  const webpOK = document.createElement("canvas").toDataURL("image/webp").indexOf("webp") > -1;
+  const tries  = webpOK ? ["img/cert.webp", "img/cert.jpg"] : ["img/cert.jpg"];
+  /* Try each source in turn — a 404 or a decode failure on the webp must still
+     leave the participant with a certificate. */
   return new Promise((res, rej) => {
-    const im = new Image();
-    im.onload  = () => { certBg = im; res(im); };
-    im.onerror = rej;
-    im.src = (document.createElement("canvas").toDataURL("image/webp").indexOf("webp") > -1)
-             ? "img/cert.webp" : "img/cert.jpg";
+    (function attempt(i) {
+      if (i >= tries.length) return rej(new Error("certificate background unavailable"));
+      const im = new Image();
+      im.onload  = () => { certBg = im; res(im); };
+      im.onerror = () => attempt(i + 1);
+      im.src = tries[i];
+    })(0);
   });
 }
 

@@ -1,9 +1,9 @@
 /* Pink Wave 2026 — offline service worker
    Bump CACHE whenever you change any file, otherwise phones keep the old copy. */
-const CACHE = "pinkwave-v10";
+const CACHE = "pinkwave-v11";
 
 const ASSETS = [
-  "./", "./index.html", "./content.js?v=10", "./app.js?v=10",
+  "./", "./index.html", "./content.js?v=11", "./app.js?v=11",
   "./manifest.webmanifest", "./icon-192.png", "./icon-512.png",
   "./img/step1.webp","./img/step2.webp","./img/step3.webp","./img/step4.webp",
   "./img/step5.webp","./img/step6.webp","./img/pads.webp","./img/overlap.webp",
