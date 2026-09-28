@@ -117,6 +117,64 @@ C.ui = {
 
 C.sourceUrl = "https://www.sgpgibreasthealth.org.in/";
 
+/* ------------------------------------------------------- THE GAME ------
+   Pink Wave Runner. Short labels on the signs; the full correction only
+   appears on the game-over card, so play never turns into reading.
+   ------------------------------------------------------------------------ */
+C.game = {
+  title:   {en:"Pink Wave Runner",           hi:"पिंक वेव रनर"},
+  sub:     {en:"Walk the Lucknow route. Collect ribbons. Dodge the excuses that cost women time.",
+            hi:"लखनऊ के मार्ग पर चलिए। रिबन इकट्ठे कीजिए। उन बहानों से बचिए जो महिलाओं का समय छीनते हैं।"},
+  how1:    {en:"swipe to change lane",       hi:"लेन बदलने के लिए खिसकाइए"},
+  how2:    {en:"swipe up to jump",           hi:"कूदने के लिए ऊपर खिसकाइए"},
+  how3:    {en:"collect ribbons",            hi:"रिबन इकट्ठे कीजिए"},
+  play:    {en:"Start running",              hi:"दौड़ना शुरू कीजिए"},
+  again:   {en:"Run again",                  hi:"फिर दौड़िए"},
+  close:   {en:"Close",                      hi:"बंद कीजिए"},
+  metres:  {en:"METRES WALKED",              hi:"मीटर चले"},
+  ribbons: {en:"RIBBONS",                    hi:"रिबन"},
+  yourBest:{en:"YOUR BEST",                  hi:"आपका सर्वश्रेष्ठ"},
+  km:      {en:"KM",                         hi:"कि.मी."},
+  newBest: {en:"🏆 New personal best",       hi:"🏆 आपका नया सर्वश्रेष्ठ"},
+  stopped: {en:"stopped you",                hi:"ने आपको रोक दिया"},
+  tripTtl: {en:"You tripped on a hurdle",    hi:"आप बाधा से टकरा गईं"},
+  tripBdy: {en:"Swipe up to jump the low barriers.",
+            hi:"नीची बाधाओं को कूदने के लिए ऊपर खिसकाइए।"},
+  shared:  {en:"Every metre is added to one shared total for the whole walkathon.",
+            hi:"हर मीटर पूरे वॉकाथॉन के साझा कुल में जुड़ता है।"},
+  menu:    {en:"Play Pink Wave Runner",      hi:"पिंक वेव रनर खेलिए"},
+  beat:    {en:"NEW BEST!",                  hi:"नया रिकॉर्ड!"},
+  magnet:  {en:"⭐ RIBBON MAGNET",           hi:"⭐ रिबन चुंबक"}
+};
+
+/* Short sign label + the correction shown only if it stops you. */
+C.gameMyths = [
+ {s:{en:"NO PAIN",          hi:"दर्द नहीं"},
+  f:{en:"9 out of 10 breast cancers are completely painless. Waiting for pain is how the curable window is lost.",
+     hi:"10 में से 9 स्तन कैंसर बिलकुल दर्दरहित होते हैं। दर्द का इंतज़ार करने से इलाज का सही समय निकल जाता है।"}},
+ {s:{en:"NOT IN MY FAMILY", hi:"परिवार में नहीं"},
+  f:{en:"In more than 8 out of 10 breast cancers there is no family history at all.",
+     hi:"10 में से 8 से अधिक मामलों में परिवार में कोई इतिहास नहीं होता।"}},
+ {s:{en:"TOO BUSY",         hi:"समय नहीं"},
+  f:{en:"A self-check takes three minutes, once a month.",
+     hi:"स्वयं जाँच में महीने में एक बार, केवल तीन मिनट लगते हैं।"}},
+ {s:{en:"TOO SHY",          hi:"संकोच"},
+  f:{en:"Every doctor has seen this a thousand times. Embarrassment costs months.",
+     hi:"हर डॉक्टर यह हज़ार बार देख चुका है। संकोच महीनों का नुक़सान करता है।"}},
+ {s:{en:"TOO YOUNG",        hi:"उम्र कम है"},
+  f:{en:"In India a large share of cases occur in the 40s, and many earlier.",
+     hi:"भारत में बड़ी संख्या में मामले 40 की उम्र में होते हैं, और कई उससे भी पहले।"}},
+ {s:{en:"WAIT AND SEE",     hi:"देखते हैं"},
+  f:{en:"A lump that has not settled before your next period needs a doctor, soon.",
+     hi:"अगली माहवारी तक जो गाँठ न जाए, उसे जल्द डॉक्टर को दिखाइए।"}},
+ {s:{en:"HEALER FIRST",     hi:"पहले ओझा"},
+  f:{en:"Any breast change belongs in front of a doctor first — not last.",
+     hi:"स्तन में कोई भी बदलाव सबसे पहले डॉक्टर को दिखाना चाहिए — सबसे बाद में नहीं।"}},
+ {s:{en:"FEAR SURGERY",     hi:"ऑपरेशन का डर"},
+  f:{en:"Surgery removes the cancer. It is delay, not surgery, that lets it spread.",
+     hi:"सर्जरी कैंसर को निकालती है। देरी उसे फैलने देती है, सर्जरी नहीं।"}}
+];
+
 /* ------------------------------------------------------------- MYTHS ----
    Source: sgpgibreasthealth.org.in → Myths & Facts ("What Science Says").
    The site lists 13 statements, all of which are myths. A deck where every
